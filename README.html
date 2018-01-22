@@ -492,16 +492,14 @@ password=test678</pre>
 <h3 id="_heroku"><a class="anchor" href="#_heroku"></a>3.1. Heroku</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/.....
-cd email-serivce
+<pre class="highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/pablooo/ok.git
+cd ok
 heroku  apps:create email-serivce --region eu
 heroku config:set SENDGRID_API_KEY=&lt;YOUR_MAILGUN_API_KEY&gt;
 heroku config:set MAILGUN_API_KEY=&lt;YOUR_SENDGRID_API_KEY&gt;
-
 git push heroku master
-mvn -Dheroku.appName=email-service heroku:deploy
 heroku open
-heloku logs --tail</code></pre>
+heroku logs --tail</code></pre>
 </div>
 </div>
 </div>
@@ -694,7 +692,7 @@ Paweł
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-01-22 16:23:48 CET
+Last updated 2018-01-22 17:08:55 CET
 </div>
 </div>
 </body>

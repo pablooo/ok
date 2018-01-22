@@ -34,16 +34,14 @@ It will redirect you to page http://localhost:8080/swagger-ui.html
 
 [source,bash]
 -----------------
-git clone https://github.com/.....
-cd email-serivce
+git clone https://github.com/pablooo/ok.git
+cd ok
 heroku  apps:create email-serivce --region eu
 heroku config:set SENDGRID_API_KEY=<YOUR_MAILGUN_API_KEY>
 heroku config:set MAILGUN_API_KEY=<YOUR_SENDGRID_API_KEY>
-
 git push heroku master
-mvn -Dheroku.appName=email-service heroku:deploy
 heroku open
-heloku logs --tail
+heroku logs --tail
 -----------------
 
 === Scalability
