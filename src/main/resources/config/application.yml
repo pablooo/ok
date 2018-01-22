@@ -1,0 +1,30 @@
+sendGrid:
+    apiKey: ${SENDGRID_API_KEY:}
+    successMsg: "Email sended by SendGrid"
+    failMsg: "Email not sended by SendGrid"
+    failApiKeyMsg: "Empty API key. Please set environment params: SENDGRID_API_KEY"
+
+mailGun:
+    apiKey: ${MAILGUN_API_KEY:}
+    successMsg: "Email sended by MailGun"
+    failMsg: "Email not sended by MailGun"
+    failApiKeyMsg: "Empty API key. Please set environment params: MAILGUN_API_KEY"
+    urlTemplate: "https://api.mailgun.net/v3/%s/messages"
+    domain: "sandboxe376f262cb044b84bd3bbfca3c2f220b.mailgun.org"
+
+# Swagger configuation
+swagger:
+  title: EmailData service
+  description: Sclable application to sending emails using multiple providers.
+  version: '@project.version@'
+  termsOfServiceUrl:
+  contactName: Paweł
+  contactUrl:
+  contactEmail:
+  license:
+  licenseUrl:
+  basePackage: com.pablo.emailservice
+
+endpoints:
+  health:
+    enabled: true

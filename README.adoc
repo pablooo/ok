@@ -1,0 +1,139 @@
+:icons: font
+
+:toc: macro
+:toclevels: 3
+:sectnums:
+:sectanchors:
+
+image:http://fontslogo.com/wp-content/uploads/2013/03/Java-Logo-Font.jpg[alt="java logo.",width=30%,height=128]
+
+toc::[]
+
+== General information
+Project provides sending email using two providers:
+. SendGrid sendgrid.com
+. Mailgun mailgun.com
+
+If one of the services goes down it will use another provider.[Email service^]
+I was using Java 8, Spring Boot, Spring Security and Swagger-UI instead of writing frontend app.
+Monitoring is enabled (healthcheck), logs in app are clearly displaying what is happening in app.
+
+== Usage
+Go to page http://localhost:8080/login
+credentials:
+
+ user=user
+ password=test678
+
+It will redirect you to page http://localhost:8080/swagger-ui.html
+
+
+== Deploy
+
+=== Heroku
+
+[source,bash]
+-----------------
+git clone https://github.com/.....
+cd email-serivce
+heroku  apps:create email-serivce --region eu
+heroku config:set SENDGRID_API_KEY=<YOUR_MAILGUN_API_KEY>
+heroku config:set MAILGUN_API_KEY=<YOUR_SENDGRID_API_KEY>
+
+git push heroku master
+mvn -Dheroku.appName=email-service heroku:deploy
+heroku open
+heloku logs --tail
+-----------------
+
+=== Scalability
+You can scale up application using:
+[source,bash]
+-----------------
+heroku ps:scale web=<NUMBER_OF_INSTANCES>
+-----------------
+
+=== On local computer
+Please add two variables with your API keys to your environment:
+[source,bash]
+-----------------
+export MAILGUN_API_KEY='<YOUR_MAILGUN_API_KEY>'
+export SENDGRID_API_KEY='<YOUR_SENDGRID_API_KEY>'
+-----------------
+and run app:
+[source,bash]
+-----------------
+mvn clean spring-boot:run
+-----------------
+
+App has versioned REST API. You can check and test it on page http://localhost:8080/swagger-ui.html
+
+
+=== Problems
+
+You can see following error (if API keys are not set):
+"Empty API key. Please set environment params: SENDGRID_API_KEY"
+"Empty API key. Please set environment params: MAILGUN_API_KEY"
+
+You can set variables when you running app on Heroku:
+
+[source,bash]
+-----------------
+heroku config:set SENDGRID_API_KEY=<YOUR_MAILGUN_API_KEY>
+heroku config:set MAILGUN_API_KEY=<YOUR_SENDGRID_API_KEY>
+-----------------
+or locally:
+
+[source,bash]
+-----------------
+export MAILGUN_API_KEY='<YOUR_MAILGUN_API_KEY>'
+export SENDGRID_API_KEY='<YOUR_SENDGRID_API_KEY>'
+-----------------
+
+=== Limitations
+
+==== Mailgun
+You can send up to 300 emails/day from this sandbox server.
+Next, you should add your own domain so you can send 10,000 emails/month for free.
+
+=== SendGrid
+Free accounts are limited to 12,000 emails per month.
+
+== Monitoring
+
+== App
+http://localhost:8080/health
+
+=== Mailgun
+All logs are on page https://app.mailgun.com/app/logs
+
+=== SendGrid
+All logs are on page https://app.sendgrid.com/
+
+== Ideas
+* Test app with Gatling
+* The project could consists of 3 modules:
+. email-service-api - Java 8 application which uses some providers to sending email and gives REST API.
+. email-service-frontend - frontend application which uses email-service-api
+. commons - shared library with commons utils.
+* Add profiles: prod, test, dev (they will use some other key api etc)
+* Made frontend in NodeJS or Angular - I'm not the best in frontend
+* Connect logging functionality with some OAuth2 using Spring Security
+* Add more logic for example: if provider has some error disable him for sometime and check his health sending to some test email test message.
+* Add more providers
+* Add all messages from code to properties files for internationalization en/pl/..
+* Use io.micrometer:micrometer-registry-prometheus to send metrics to Prometheus
+
+
+== Extra
+=== Building html. from .adoc
+You must install http://asciidoctor.org/[Asciidoctor^] than run
+
+
+[source,bash]
+-----------------
+asciidoctor README.adoc -o README.html
+-----------------
+
+== Credits
+CAUTION: Paweł
